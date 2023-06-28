@@ -285,6 +285,7 @@ async function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, wri
   }
 
   writerOpts = {
+    skipUnstable: options.skipUnstable,
     finalizeContext: function (context, writerOpts, filteredCommits, keyCommit, originalCommits) {
       const firstCommit = originalCommits[0]
       const lastCommit = originalCommits[originalCommits.length - 1]

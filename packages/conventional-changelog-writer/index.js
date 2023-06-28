@@ -4,7 +4,7 @@ const dateFormat = require('dateformat')
 const { Transform } = require('stream')
 const { join } = require('path')
 const { readFileSync } = require('fs')
-const { valid: semverValid } = require('semver')
+const { valid: semverValid, prerelease: semverPrerelease } = require('semver')
 const util = require('./lib/util')
 
 function conventionalChangelogWriterInit (context, options) {
@@ -25,7 +25,7 @@ function conventionalChangelogWriterInit (context, options) {
     noteGroupsSort: 'title',
     notesSort: 'text',
     generateOn: function (commit) {
-      return semverValid(commit.version)
+      return semverValid(commit.version) && (!options.skipUnstable || !semverPrerelease(commit.version))
     },
     finalizeContext: function (context) {
       return context
